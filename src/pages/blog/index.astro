@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const decades = ['80s', '90s', '2000s'];
+---
+
+<BaseLayout title="Blog">
+  <h1>Blog &amp; Articles</h1>
+  <p>Fun facts, trivia, and stories — filterable by decade.</p>
+
+  {/* Decade tags shown per-post below. Wire these up to real client-side
+     filtering later (e.g. a small script toggling a data-decade attribute) —
+     kept static here to keep the scaffold dependency-free. */}
+  <div class="filters">
+    {decades.map((d) => <span class="tag">{d}</span>)}
+  </div>
+
+  <div class="grid">
+    {posts.map((post) => (
+      <ArticleCard slug={post.id} title={post.data.title} description={post.data.description} decades={post.data.decades} />
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .filters {
+    margin: 1rem 0 1.5rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+</style>

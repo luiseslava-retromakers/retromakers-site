@@ -1,0 +1,64 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+// Pull in related game entries, if any were listed in frontmatter.
+const relatedGames = await Promise.all(
+  post.data.relatedGames.map((id: string) => getEntry('games', id))
+);
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article>
+    <div>
+      {post.data.decades.map((d: string) => <span class="tag">{d}</span>)}
+    </div>
+    <h1>{post.data.title}</h1>
+    <p class="dateline">{post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+    <div class="prose">
+      <Content />
+    </div>
+
+    {relatedGames.filter(Boolean).length > 0 && (
+      <aside class="related">
+        <h3>Related game database entries</h3>
+        <ul>
+          {relatedGames.filter(Boolean).map((game) => (
+            <li><a href={`/games/${game!.id}`}>{game!.data.title}</a></li>
+          ))}
+        </ul>
+      </aside>
+    )}
+  </article>
+</BaseLayout>
+
+<style>
+  article {
+    max-width: 680px;
+    margin: 2rem auto;
+  }
+  .dateline {
+    color: var(--color-copper-deep);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+  }
+  .prose {
+    margin-top: 1.5rem;
+  }
+  .related {
+    margin-top: 2.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2d9c8;
+  }
+</style>

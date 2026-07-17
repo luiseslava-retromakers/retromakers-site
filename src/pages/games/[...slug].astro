@@ -1,0 +1,56 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const games = await getCollection('games', ({ data }) => !data.draft);
+  return games.map((game) => ({
+    params: { slug: game.id },
+    props: { game },
+  }));
+}
+
+const { game } = Astro.props;
+const { Content } = await render(game);
+---
+
+<BaseLayout title={game.data.title}>
+  <article>
+    <h1>{game.data.title}</h1>
+    <p class="meta">
+      {game.data.platform.join(', ')} &middot; {game.data.releaseYear}
+      {game.data.developer && <> &middot; Developed by {game.data.developer}</>}
+    </p>
+
+    <div>
+      {game.data.genre.map((g: string) => <span class="tag">{g}</span>)}
+    </div>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    {game.data.funFacts.length > 0 && (
+      <section>
+        <h2>Fun Facts</h2>
+        {game.data.funFacts.map((fact: string) => (
+          <div class="fun-fact">{fact}</div>
+        ))}
+      </section>
+    )}
+  </article>
+</BaseLayout>
+
+<style>
+  article {
+    max-width: 680px;
+    margin: 2rem auto;
+  }
+  .meta {
+    font-family: var(--font-mono);
+    color: var(--color-copper-deep);
+  }
+  .prose {
+    margin: 1rem 0;
+  }
+</style>

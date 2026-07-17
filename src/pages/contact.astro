@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Contact">
+  <article class="prose-page">
+    <h1>Contact</h1>
+    <p>Got a fun fact, a correction, or a game you think deserves a page? Reach out.</p>
+
+    <!--
+      Netlify Forms: this works automatically once deployed on Netlify — no backend needed.
+      The data-netlify="true" attribute is what triggers Netlify's form handling at build time.
+    -->
+    <form name="contact" method="POST" data-netlify="true">
+      <input type="hidden" name="form-name" value="contact" />
+      <label>
+        Name
+        <input type="text" name="name" required />
+      </label>
+      <label>
+        Email
+        <input type="email" name="email" required />
+      </label>
+      <label>
+        Message
+        <textarea name="message" rows="5" required></textarea>
+      </label>
+      <button type="submit" class="button">Send</button>
+    </form>
+
+    <p>Or email <a href="mailto:leslava@retromakers.com">leslava@retromakers.com</a> directly.</p>
+  </article>
+</BaseLayout>
+
+<style>
+  .prose-page {
+    max-width: 560px;
+    margin: 2rem auto;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin: 1.5rem 0;
+  }
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-weight: 500;
+  }
+  input,
+  textarea {
+    padding: 0.6rem;
+    border-radius: var(--radius);
+    border: 1px solid #ddd;
+    font-family: var(--font-body);
+  }
+</style>

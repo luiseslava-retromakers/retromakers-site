@@ -1,0 +1,57 @@
+---
+const nav = [
+  { href: '/', label: 'Home' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/games', label: 'Game Database' },
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+];
+---
+
+<header>
+  <div class="container header-inner">
+    <a href="/" class="brand">RETROMAKERS</a>
+    <nav>
+      {nav.map((item) => (
+        <a href={item.href}>{item.label}</a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<style>
+  header {
+    background: var(--color-near-black);
+    padding: 1rem 0;
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .brand {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--color-white);
+    letter-spacing: 0.03em;
+  }
+  .brand:hover {
+    color: var(--color-copper);
+    text-decoration: none;
+  }
+  nav {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+  nav a {
+    color: var(--color-cream);
+    font-weight: 500;
+  }
+  nav a:hover {
+    color: var(--color-copper);
+  }
+</style>

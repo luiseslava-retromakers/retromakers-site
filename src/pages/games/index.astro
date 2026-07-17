@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GameCard from '../../components/GameCard.astro';
+
+const games = (await getCollection('games', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.releaseYear - b.data.releaseYear
+);
+---
+
+<BaseLayout title="Game Database">
+  <h1>Game Database</h1>
+  <p>A growing, wiki-style archive of retro games — platform, release year, and the fun facts that go with them.</p>
+
+  <div class="grid">
+    {games.map((game) => (
+      <GameCard slug={game.id} title={game.data.title} platform={game.data.platform} releaseYear={game.data.releaseYear} />
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin: 1.5rem 0 2.5rem;
+  }
+</style>

@@ -1,0 +1,43 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="container footer-inner">
+    <p>&copy; {year} Retromakers. All game titles, screenshots, and artwork referenced belong to their respective owners.</p>
+    <nav>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Use</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  footer {
+    background: var(--color-near-black);
+    color: var(--color-cream);
+    padding: 1.5rem 0;
+    margin-top: 3rem;
+    font-size: 0.85rem;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+  footer nav {
+    display: flex;
+    gap: 1rem;
+  }
+  footer a {
+    color: var(--color-cream);
+    opacity: 0.85;
+  }
+  footer a:hover {
+    color: var(--color-copper);
+    opacity: 1;
+  }
+</style>

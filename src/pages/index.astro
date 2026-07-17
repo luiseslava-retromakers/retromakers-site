@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import NewsletterForm from '../components/NewsletterForm.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 6);
+---
+
+<BaseLayout title="Home">
+  <section class="hero">
+    <h1>Fun facts &amp; stories from the games you grew up with.</h1>
+    <p>80s, 90s, and 2000s trivia — the stories behind the games, told the fun way.</p>
+  </section>
+
+  <section>
+    <h2>Latest stories</h2>
+    <div class="grid">
+      {posts.map((post) => (
+        <ArticleCard slug={post.id} title={post.data.title} description={post.data.description} decades={post.data.decades} />
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <NewsletterForm />
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    text-align: center;
+    padding: 3rem 0 2rem;
+  }
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin: 1.5rem 0 2.5rem;
+  }
+</style>

@@ -1,0 +1,31 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+  platform: string[];
+  releaseYear: number;
+}
+const { slug, title, platform, releaseYear } = Astro.props;
+---
+
+<a class="card game-card" href={`/games/${slug}`}>
+  <h3>{title}</h3>
+  <p class="meta">{platform.join(', ')} &middot; {releaseYear}</p>
+</a>
+
+<style>
+  .game-card {
+    display: block;
+    color: var(--color-charcoal);
+  }
+  .game-card:hover {
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  }
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-copper-deep);
+    margin: 0.25rem 0 0;
+  }
+</style>

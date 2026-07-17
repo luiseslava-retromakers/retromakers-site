@@ -1,0 +1,31 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+  description: string;
+  decades: string[];
+}
+const { slug, title, description, decades } = Astro.props;
+---
+
+<a class="card article-card" href={`/blog/${slug}`}>
+  <div>
+    {decades.map((d) => <span class="tag">{d}</span>)}
+  </div>
+  <h3>{title}</h3>
+  <p>{description}</p>
+</a>
+
+<style>
+  .article-card {
+    display: block;
+    color: var(--color-charcoal);
+  }
+  .article-card:hover {
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  }
+  .article-card h3 {
+    margin-top: 0.5rem;
+  }
+</style>
