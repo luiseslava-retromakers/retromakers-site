@@ -13,6 +13,8 @@ const {
   description = 'Fun facts and stories from 80s, 90s, and 2000s video games.',
   noindex = false,
 } = Astro.props;
+
+const GA_MEASUREMENT_ID = 'G-9LX3ZR8S1H';
 ---
 
 <!doctype html>
@@ -36,6 +38,19 @@ const {
       href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap"
       rel="stylesheet"
     />
+    {import.meta.env.PROD && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
+        <script define:vars={{ GA_MEASUREMENT_ID }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(...args) {
+            window.dataLayer.push(args);
+          }
+          gtag('js', new Date());
+          gtag('config', GA_MEASUREMENT_ID);
+        </script>
+      </>
+    )}
   </head>
   <body>
     <Header />
