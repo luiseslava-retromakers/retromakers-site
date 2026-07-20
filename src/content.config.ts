@@ -38,4 +38,18 @@ const games = defineCollection({
   }),
 });
 
-export const collections = { blog, games };
+// Video scripts for social media — kept out of the main nav/sitemap on purpose.
+// This is a personal staging area, not a public content type.
+const scripts = defineCollection({
+  loader: glob({ base: './src/content/scripts', pattern: '**/*.{md,mdx}' }),
+  schema: z.object({
+    title: z.string(),
+    relatedGame: z.string().optional(),
+    platform: z.array(z.string()).default([]), // e.g. ["TikTok", "Reels", "Shorts"]
+    status: z.enum(['borrador', 'listo', 'publicado']).default('borrador'),
+    durationTarget: z.string().optional(), // e.g. "60-90 segundos"
+    notes: z.string().optional(),
+  }),
+});
+
+export const collections = { blog, games, scripts };

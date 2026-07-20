@@ -1,0 +1,65 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const scripts = await getCollection('scripts');
+  return scripts.map((script) => ({
+    params: { slug: script.id },
+    props: { script },
+  }));
+}
+
+const { script } = Astro.props;
+const { Content } = await render(script);
+---
+
+<BaseLayout title={script.data.title} noindex={true}>
+  <article class="prose-page">
+    <p><a href="/scripts">&larr; Volver a la lista de scripts</a></p>
+    <h1>{script.data.title}</h1>
+    <p class="meta">
+      <span class={`status status-${script.data.status}`}>{script.data.status}</span>
+      {script.data.platform.length > 0 && <span> · {script.data.platform.join(', ')}</span>}
+      {script.data.durationTarget && <span> · {script.data.durationTarget}</span>}
+    </p>
+    {script.data.notes && <p class="notes"><strong>Notas:</strong> {script.data.notes}</p>}
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .prose-page {
+    max-width: 680px;
+    margin: 2rem auto;
+  }
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-copper-deep);
+  }
+  .status {
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .status-borrador {
+    color: #b8860b;
+  }
+  .status-listo {
+    color: var(--color-teal);
+  }
+  .status-publicado {
+    color: #2e7d32;
+  }
+  .notes {
+    background: #eef7f6;
+    border-left: 4px solid var(--color-teal);
+    padding: 0.75rem 1rem;
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .prose {
+    margin-top: 1rem;
+  }
+</style>

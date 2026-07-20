@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Not linked from the main nav — this is a private staging area for video
+// scripts, not public content. noindex keeps it out of search engines too.
+const scripts = (await getCollection('scripts')).sort(
+  (a, b) => a.data.title.localeCompare(b.data.title)
+);
+---
+
+<BaseLayout title="Scripts (privado)" noindex={true}>
+  <h1>Scripts para video — área privada</h1>
+  <p>Esta sección no aparece en el menú ni en buscadores. Guarda aquí tus guiones para video antes de grabarlos.</p>
+
+  <div class="list">
+    {scripts.map((script) => (
+      <a class="card script-row" href={`/scripts/${script.id}`}>
+        <div>
+          <h3>{script.data.title}</h3>
+          <p class="meta">
+            <span class={`status status-${script.data.status}`}>{script.data.status}</span>
+            {script.data.platform.length > 0 && <span> · {script.data.platform.join(', ')}</span>}
+            {script.data.durationTarget && <span> · {script.data.durationTarget}</span>}
+          </p>
+        </div>
+      </a>
+    ))}
+    {scripts.length === 0 && <p><em>Todavía no hay scripts guardados.</em></p>}
+  </div>
+</BaseLayout>
+
+<style>
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1.5rem 0 2.5rem;
+  }
+  .script-row {
+    display: block;
+    color: var(--color-charcoal);
+  }
+  .script-row:hover {
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  }
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-copper-deep);
+    margin: 0.25rem 0 0;
+  }
+  .status {
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .status-borrador {
+    color: #b8860b;
+  }
+  .status-listo {
+    color: var(--color-teal);
+  }
+  .status-publicado {
+    color: #2e7d32;
+  }
+</style>
