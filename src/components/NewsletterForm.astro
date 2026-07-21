@@ -1,33 +1,17 @@
 ---
-// Swap the form action for your Buttondown/ConvertKit endpoint once you pick one.
-// Buttondown example: https://buttondown.email/api/emails/embed-subscribe/YOUR_USERNAME
+// Kit (formerly ConvertKit) inline form — styled to match the brand directly
+// in Kit's own editor, so no extra markup/CSS is needed here.
 ---
 
-<div class="newsletter card">
-  <h3>Get a fun fact in your inbox</h3>
-  <p>One retro gaming story a week. No spam, unsubscribe any time.</p>
-  <form action="https://buttondown.email/api/emails/embed-subscribe/YOUR_USERNAME" method="post" target="popupwindow">
-    <input type="email" name="email" placeholder="you@email.com" required />
-    <button type="submit" class="button">Subscribe</button>
-  </form>
+<div class="newsletter-embed">
+  <script is:inline async data-uid="16a29a42eb" src="https://retromakers.kit.com/16a29a42eb/index.js"></script>
 </div>
 
 <style>
-  .newsletter {
-    text-align: center;
-  }
-  form {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 0.75rem;
-  }
-  input[type='email'] {
-    padding: 0.6rem 0.85rem;
+  .newsletter-embed {
+    max-width: 480px;
+    margin: 0 auto;
     border-radius: var(--radius);
-    border: 1px solid #ddd;
-    min-width: 220px;
-    font-family: var(--font-body);
+    overflow: hidden;
   }
 </style>
