@@ -7,11 +7,15 @@ interface Props {
   title: string;
   description?: string;
   noindex?: boolean;
+  // Absolute or root-relative URL for the social/link preview image.
+  // Falls back to the site-wide default below when a page doesn't set one.
+  image?: string;
 }
 const {
   title,
   description = 'Fun facts and stories from 80s, 90s, and 2000s video games.',
   noindex = false,
+  image = '/social-preview.png',
 } = Astro.props;
 
 const GA_MEASUREMENT_ID = 'G-9LX3ZR8S1H';
@@ -30,7 +34,7 @@ const GA_MEASUREMENT_ID = 'G-9LX3ZR8S1H';
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta property="og:title" content={`${title} · Retromakers`} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL('/social-preview.png', Astro.site)} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

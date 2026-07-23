@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
+import { getImage, Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
@@ -12,9 +13,15 @@ export async function getStaticPaths() {
 
 const { game } = Astro.props;
 const { Content } = await render(game);
+
+// If this game entry has a cover image, generate an optimized version and use
+// its URL as the social/link preview thumbnail (og:image) for this page.
+const ogImage = game.data.coverImage
+  ? (await getImage({ src: game.data.coverImage, width: 1200 })).src
+  : undefined;
 ---
 
-<BaseLayout title={game.data.title}>
+<BaseLayout title={game.data.title} image={ogImage}>
   <article>
     <h1>{game.data.title}</h1>
     <p class="meta">
@@ -25,6 +32,16 @@ const { Content } = await render(game);
     <div>
       {game.data.genre.map((g: string) => <span class="tag">{g}</span>)}
     </div>
+
+    {game.data.coverImage && (
+      <Image
+        src={game.data.coverImage}
+        alt={game.data.coverImageAlt ?? game.data.title}
+        widths={[400, 800, 1200]}
+        sizes="(max-width: 680px) 100vw, 680px"
+        class="cover-image"
+      />
+    )}
 
     <div class="prose">
       <Content />
@@ -52,5 +69,11 @@ const { Content } = await render(game);
   }
   .prose {
     margin: 1rem 0;
+  }
+  .cover-image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    margin-top: 1rem;
   }
 </style>

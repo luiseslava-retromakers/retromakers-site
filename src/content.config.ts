@@ -5,7 +5,7 @@ import { z } from 'astro/zod';
 // Blog / articles — fun facts, stories, trivia posts.
 const blog = defineCollection({
   loader: glob({ base: './src/content/blog', pattern: '**/*.{md,mdx}' }),
-  schema: z.object({
+  schema: ({ image }) => z.object({
     title: z.string(),
     description: z.string(),
     pubDate: z.coerce.date(),
@@ -16,6 +16,10 @@ const blog = defineCollection({
     tags: z.array(z.string()).default([]),
     // Related game entries (by id) so an article can link to its game page.
     relatedGames: z.array(z.string()).default([]),
+    // Optional cover image — used at the top of the post AND as the social/link
+    // preview thumbnail (og:image) when this post's URL is shared.
+    coverImage: image().optional(),
+    coverImageAlt: z.string().optional(),
     draft: z.boolean().default(false),
   }),
 });
@@ -23,7 +27,7 @@ const blog = defineCollection({
 // Game database — one structured entry per game, wiki-style.
 const games = defineCollection({
   loader: glob({ base: './src/content/games', pattern: '**/*.{md,mdx}' }),
-  schema: z.object({
+  schema: ({ image }) => z.object({
     title: z.string(),
     platform: z.array(z.string()), // e.g. ["NES", "Arcade"]
     developer: z.string().optional(),
@@ -34,6 +38,10 @@ const games = defineCollection({
     // Short, punchy trivia bullets — the heart of the site.
     funFacts: z.array(z.string()).default([]),
     tags: z.array(z.string()).default([]),
+    // Optional cover image — used at the top of the entry AND as the social/link
+    // preview thumbnail (og:image) when this game page's URL is shared.
+    coverImage: image().optional(),
+    coverImageAlt: z.string().optional(),
     draft: z.boolean().default(false),
   }),
 });
