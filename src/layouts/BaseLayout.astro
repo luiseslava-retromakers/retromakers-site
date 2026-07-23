@@ -45,14 +45,20 @@ const GA_MEASUREMENT_ID = 'G-9LX3ZR8S1H';
     />
     {import.meta.env.PROD && (
       <>
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
+        {/*
+          IMPORTANT: this consent + dataLayer setup script MUST run BEFORE the
+          gtag.js library script tag below. Google's Consent Mode requires the
+          default consent state to be queued up before the library loads — if
+          gtag.js initializes first (which can happen since it loads via
+          `async`), it locks in "no consent state defined" and silently drops
+          all hits, even though the library itself loads fine. Do not reorder
+          these two script tags.
+        */}
         <script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
           window.dataLayer = window.dataLayer || [];
           window.gtag = function gtag(...args) {
             window.dataLayer.push(args);
           };
-          // Google now requires an explicit consent signal before it will collect
-          // any data — without this, gtag.js loads but silently sends nothing.
           // We don't run ads or remarketing, so we deny ad-related storage and
           // only grant basic analytics storage (page views, events).
           gtag('consent', 'default', {
@@ -64,6 +70,7 @@ const GA_MEASUREMENT_ID = 'G-9LX3ZR8S1H';
           gtag('js', new Date());
           gtag('config', GA_MEASUREMENT_ID);
         </script>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
       </>
     )}
   </head>
