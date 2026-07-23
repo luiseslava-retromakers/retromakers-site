@@ -51,6 +51,16 @@ const GA_MEASUREMENT_ID = 'G-9LX3ZR8S1H';
           window.gtag = function gtag(...args) {
             window.dataLayer.push(args);
           };
+          // Google now requires an explicit consent signal before it will collect
+          // any data — without this, gtag.js loads but silently sends nothing.
+          // We don't run ads or remarketing, so we deny ad-related storage and
+          // only grant basic analytics storage (page views, events).
+          gtag('consent', 'default', {
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied',
+            analytics_storage: 'granted',
+          });
           gtag('js', new Date());
           gtag('config', GA_MEASUREMENT_ID);
         </script>
