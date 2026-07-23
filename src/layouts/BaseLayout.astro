@@ -46,11 +46,11 @@ const GA_MEASUREMENT_ID = 'G-9LX3ZR8S1H';
     {import.meta.env.PROD && (
       <>
         <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
-        <script define:vars={{ GA_MEASUREMENT_ID }}>
+        <script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
           window.dataLayer = window.dataLayer || [];
-          function gtag(...args) {
+          window.gtag = function gtag(...args) {
             window.dataLayer.push(args);
-          }
+          };
           gtag('js', new Date());
           gtag('config', GA_MEASUREMENT_ID);
         </script>
