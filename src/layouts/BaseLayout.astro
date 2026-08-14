@@ -18,12 +18,35 @@ const {
   image = '/social-preview.png',
 } = Astro.props;
 
-const GA_MEASUREMENT_ID = 'G-T7FRQKFN12';
+const GTM_CONTAINER_ID = 'GTM-W2LWCQML';
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
+    {/*
+      Google Tag Manager — pasted as high in <head> as possible, per Google's
+      own install instructions. This replaces the old direct gtag.js +
+      Consent Mode setup: we're testing via a brand-new Google Account
+      (social@retromakers.com) and a GTM container instead, to isolate
+      whether the "zero data" issue was specific to the previous account/setup.
+      The actual GA4 config tag (measurement ID + trigger) is configured
+      inside the GTM container itself at tagmanager.google.com, not here.
+    */}
+    {import.meta.env.PROD && (
+      <script is:inline define:vars={{ GTM_CONTAINER_ID }}>
+        (function (w, d, s, l, i) {
+          w[l] = w[l] || [];
+          w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+          var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != 'dataLayer' ? '&l=' + l : '';
+          j.async = true;
+          j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+          f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', GTM_CONTAINER_ID);
+      </script>
+    )}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title} · Retromakers</title>
@@ -43,38 +66,19 @@ const GA_MEASUREMENT_ID = 'G-T7FRQKFN12';
       href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap"
       rel="stylesheet"
     />
-    {import.meta.env.PROD && (
-      <>
-        {/*
-          IMPORTANT: this consent + dataLayer setup script MUST run BEFORE the
-          gtag.js library script tag below. Google's Consent Mode requires the
-          default consent state to be queued up before the library loads — if
-          gtag.js initializes first (which can happen since it loads via
-          `async`), it locks in "no consent state defined" and silently drops
-          all hits, even though the library itself loads fine. Do not reorder
-          these two script tags.
-        */}
-        <script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
-          window.dataLayer = window.dataLayer || [];
-          window.gtag = function gtag(...args) {
-            window.dataLayer.push(args);
-          };
-          // We don't run ads or remarketing, so we deny ad-related storage and
-          // only grant basic analytics storage (page views, events).
-          gtag('consent', 'default', {
-            ad_storage: 'denied',
-            ad_user_data: 'denied',
-            ad_personalization: 'denied',
-            analytics_storage: 'granted',
-          });
-          gtag('js', new Date());
-          gtag('config', GA_MEASUREMENT_ID);
-        </script>
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
-      </>
-    )}
   </head>
   <body>
+    {/* Google Tag Manager (noscript) — must be immediately after <body> */}
+    {import.meta.env.PROD && (
+      <noscript>
+        <iframe
+          src={`https://www.googletagmanager.com/ns.html?id=${GTM_CONTAINER_ID}`}
+          height="0"
+          width="0"
+          style="display:none;visibility:hidden"
+        ></iframe>
+      </noscript>
+    )}
     <Header />
     <main class="container">
       <slot />
