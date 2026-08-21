@@ -2,6 +2,7 @@
 import { getCollection, getEntry, render } from 'astro:content';
 import { getImage, Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { slugifyTag } from '../../lib/tags';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -46,6 +47,14 @@ const ogImage = post.data.coverImage
       <Content />
     </div>
 
+    {post.data.tags.length > 0 && (
+      <div class="tags-section">
+        {post.data.tags.map((t: string) => (
+          <a class="tag" href={`/tags/${slugifyTag(t)}`}>{t}</a>
+        ))}
+      </div>
+    )}
+
     {relatedGames.filter(Boolean).length > 0 && (
       <aside class="related">
         <h3>Related game database entries</h3>
@@ -80,6 +89,11 @@ const ogImage = post.data.coverImage
   }
   .related {
     margin-top: 2.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2d9c8;
+  }
+  .tags-section {
+    margin-top: 2rem;
     padding-top: 1rem;
     border-top: 1px solid #e2d9c8;
   }

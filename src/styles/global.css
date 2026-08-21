@@ -86,6 +86,13 @@ a:hover {
   border-radius: 999px;
   margin: 0 0.3rem 0.3rem 0;
 }
+a.tag {
+  text-decoration: none;
+}
+a.tag:hover {
+  background: var(--color-copper-deep);
+  text-decoration: none;
+}
 
 .card {
   background: var(--color-white);

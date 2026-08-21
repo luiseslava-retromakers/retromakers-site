@@ -3,7 +3,7 @@ title: "¿Sabías que...? 12 datos curiosos sobre Symphony of the Night"
 description: "De la banda sonora que mezcla thrash metal con música clásica hasta el jefe que fue diseñado para ser imposible de vencer — todo lo que no sabías del clásico de Konami."
 pubDate: 2026-05-05
 decades: ["90s"]
-tags: ["konami", "michiru yamane", "curiosidades", "banda sonora"]
+tags: ["castlevania", "konami", "michiru yamane", "curiosidades", "banda sonora"]
 relatedGames: ["castlevania-symphony-of-the-night"]
 coverImage: "./symphony-of-the-night-sabias-que-cover.png"
 coverImageAlt: "Richter Belmont peleando contra un jefe monstruoso"

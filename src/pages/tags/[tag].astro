@@ -1,0 +1,89 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import GameCard from '../../components/GameCard.astro';
+import { slugifyTag } from '../../lib/tags';
+
+export async function getStaticPaths() {
+  const [posts, games] = await Promise.all([
+    getCollection('blog', ({ data }) => !data.draft),
+    getCollection('games', ({ data }) => !data.draft),
+  ]);
+
+  // Collect every distinct tag across both collections, keeping the first
+  // "nicely cased" version we see (e.g. "Michiru Yamane") as the display label
+  // while the URL itself uses the slugified version.
+  const tagMap = new Map<string, string>();
+  for (const entry of [...posts, ...games]) {
+    for (const tag of entry.data.tags) {
+      const slug = slugifyTag(tag);
+      if (!tagMap.has(slug)) tagMap.set(slug, tag);
+    }
+  }
+
+  return Array.from(tagMap.entries()).map(([slug, label]) => ({
+    params: { tag: slug },
+    props: { label },
+  }));
+}
+
+const { tag: tagSlug } = Astro.params;
+const { label } = Astro.props;
+
+const [allPosts, allGames] = await Promise.all([
+  getCollection('blog', ({ data }) => !data.draft),
+  getCollection('games', ({ data }) => !data.draft),
+]);
+
+const games = allGames.filter((g) => g.data.tags.some((t) => slugifyTag(t) === tagSlug));
+const posts = allPosts
+  .filter((p) => p.data.tags.some((t) => slugifyTag(t) === tagSlug))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title={`Tag: ${label}`} description={`Todo lo relacionado con "${label}" en Retromakers.`}>
+  <h1>#{label}</h1>
+  <p>Todo lo relacionado con &ldquo;{label}&rdquo; en Retromakers.</p>
+
+  {games.length > 0 && (
+    <>
+      <h2>Juegos</h2>
+      <div class="grid">
+        {games.map((game) => (
+          <GameCard
+            slug={game.id}
+            title={game.data.title}
+            platform={game.data.platform}
+            releaseYear={game.data.releaseYear}
+          />
+        ))}
+      </div>
+    </>
+  )}
+
+  {posts.length > 0 && (
+    <>
+      <h2>Artículos</h2>
+      <div class="grid">
+        {posts.map((post) => (
+          <ArticleCard
+            slug={post.id}
+            title={post.data.title}
+            description={post.data.description}
+            decades={post.data.decades}
+          />
+        ))}
+      </div>
+    </>
+  )}
+</BaseLayout>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin: 1.25rem 0 2.5rem;
+  }
+</style>

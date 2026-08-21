@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { slugifyTag } from '../../lib/tags';
+
+const [posts, games] = await Promise.all([
+  getCollection('blog', ({ data }) => !data.draft),
+  getCollection('games', ({ data }) => !data.draft),
+]);
+
+const tagMap = new Map<string, string>();
+for (const entry of [...posts, ...games]) {
+  for (const tag of entry.data.tags) {
+    const slug = slugifyTag(tag);
+    if (!tagMap.has(slug)) tagMap.set(slug, tag);
+  }
+}
+
+const tags = Array.from(tagMap.entries()).sort((a, b) => a[1].localeCompare(b[1]));
+---
+
+<BaseLayout title="Tags" description="Explora todo el contenido de Retromakers por tema.">
+  <h1>Tags</h1>
+  <p>Explora todo el contenido de Retromakers por tema — desarrolladores, géneros, plataformas y más.</p>
+  <div class="tag-cloud">
+    {tags.map(([slug, label]) => (
+      <a class="tag" href={`/tags/${slug}`}>{label}</a>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 1.5rem;
+  }
+  .tag-cloud .tag {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.7rem;
+  }
+</style>

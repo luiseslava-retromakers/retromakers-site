@@ -3,7 +3,7 @@ title: "La historia detrás de Symphony of the Night: del Sega 32X al clásico q
 description: "Cómo un proyecto cancelado para el Sega 32X se convirtió en el Castlevania que le dio nombre a todo un subgénero."
 pubDate: 2026-04-02
 decades: ["90s"]
-tags: ["konami", "metroidvania", "iga", "desarrollo"]
+tags: ["castlevania", "konami", "metroidvania", "iga", "desarrollo"]
 relatedGames: ["castlevania-symphony-of-the-night"]
 coverImage: "./symphony-of-the-night-historia-cover.png"
 coverImageAlt: "Alucard saltando hacia la entrada del castillo de Drácula"
