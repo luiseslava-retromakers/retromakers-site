@@ -5,6 +5,8 @@ pubDate: 2026-04-16
 decades: ["90s"]
 tags: ["personajes", "sega saturn", "curiosidades"]
 relatedGames: ["castlevania-symphony-of-the-night"]
+coverImage: "./symphony-of-the-night-maria-renard-cover.png"
+coverImageAlt: "Maria Renard presentándose junto a un gran reloj dentro del castillo"
 draft: false
 ---
 

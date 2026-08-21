@@ -17,6 +17,8 @@ funFacts:
   - "Maria Renard estaba planeada como personaje jugable desde el principio, pero se recortó por falta de tiempo. Sus líneas de voz quedaron guardadas en la memoria del juego sin usarse — la prueba de que existió mucho antes de volverse jugable oficialmente en la versión de Sega Saturn."
   - "A pesar de ser hoy un clásico venerado, vendió relativamente poco en Japón al lanzarse: apenas superó las 225,000 copias entre PS1 y Saturn, comparado con casi 480,000 solo en Estados Unidos."
 tags: ["konami", "metroidvania", "iga", "playstation", "gótico"]
+coverImage: "./castlevania-symphony-of-the-night-cover.png"
+coverImageAlt: "Richter Belmont enfrentando a Drácula en su trono, con el diálogo 'Muere y abandona este mundo'"
 draft: false
 ---
 

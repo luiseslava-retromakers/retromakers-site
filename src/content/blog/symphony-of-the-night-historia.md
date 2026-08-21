@@ -5,6 +5,8 @@ pubDate: 2026-04-02
 decades: ["90s"]
 tags: ["konami", "metroidvania", "iga", "desarrollo"]
 relatedGames: ["castlevania-symphony-of-the-night"]
+coverImage: "./symphony-of-the-night-historia-cover.png"
+coverImageAlt: "Alucard saltando hacia la entrada del castillo de Drácula"
 draft: false
 ---
 

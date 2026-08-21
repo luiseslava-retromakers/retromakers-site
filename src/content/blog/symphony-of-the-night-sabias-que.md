@@ -5,6 +5,8 @@ pubDate: 2026-05-05
 decades: ["90s"]
 tags: ["konami", "michiru yamane", "curiosidades", "banda sonora"]
 relatedGames: ["castlevania-symphony-of-the-night"]
+coverImage: "./symphony-of-the-night-sabias-que-cover.png"
+coverImageAlt: "Richter Belmont peleando contra un jefe monstruoso"
 draft: false
 ---
 
