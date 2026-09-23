@@ -108,3 +108,14 @@ a.tag:hover {
   border-radius: 0 var(--radius) var(--radius) 0;
   margin: 1rem 0;
 }
+
+/* Images inserted directly in article/game body content (via markdown) —
+   without this, an <img> renders at its native pixel width and can overflow
+   the viewport on mobile instead of scaling down like the cover image does. */
+.prose img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius);
+  margin: 1.25rem auto;
+}
