@@ -8,9 +8,9 @@ const games = (await getCollection('games', ({ data }) => !data.draft)).sort(
 );
 ---
 
-<BaseLayout title="Game Database">
-  <h1>Game Database</h1>
-  <p>A growing, wiki-style archive of retro games — platform, release year, and the fun facts that go with them.</p>
+<BaseLayout title="Base de Juegos">
+  <h1>Base de Juegos</h1>
+  <p>Un archivo creciente, estilo wiki, de juegos retro — plataforma, año de lanzamiento y los datos curiosos que los acompañan.</p>
 
   <div class="grid">
     {games.map((game) => (

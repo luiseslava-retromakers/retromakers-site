@@ -27,7 +27,7 @@ const ogImage = game.data.coverImage
     <h1>{game.data.title}</h1>
     <p class="meta">
       {game.data.platform.join(', ')} &middot; {game.data.releaseYear}
-      {game.data.developer && <> &middot; Developed by {game.data.developer}</>}
+      {game.data.developer && <> &middot; Desarrollado por {game.data.developer}</>}
     </p>
 
     <div>
@@ -50,7 +50,7 @@ const ogImage = game.data.coverImage
 
     {game.data.funFacts.length > 0 && (
       <section>
-        <h2>Fun Facts</h2>
+        <h2>Datos Curiosos</h2>
         {game.data.funFacts.map((fact: string) => (
           <div class="fun-fact">{fact}</div>
         ))}

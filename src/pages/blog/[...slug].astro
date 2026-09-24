@@ -33,7 +33,7 @@ const ogImage = post.data.coverImage
       {post.data.decades.map((d: string) => <span class="tag">{d}</span>)}
     </div>
     <h1>{post.data.title}</h1>
-    <p class="dateline">{post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+    <p class="dateline">{post.data.pubDate.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
     {post.data.coverImage && (
       <Image
         src={post.data.coverImage}
@@ -57,7 +57,7 @@ const ogImage = post.data.coverImage
 
     {relatedGames.filter(Boolean).length > 0 && (
       <aside class="related">
-        <h3>Related game database entries</h3>
+        <h3>Fichas de juego relacionadas</h3>
         <ul>
           {relatedGames.filter(Boolean).map((game) => (
             <li><a href={`/games/${game!.id}`}>{game!.data.title}</a></li>
