@@ -9,14 +9,14 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .slice(0, 6);
 ---
 
-<BaseLayout title="Home">
+<BaseLayout title="Inicio">
   <section class="hero">
-    <h1>Fun facts &amp; stories from the games you grew up with.</h1>
-    <p>80s, 90s, and 2000s trivia — the stories behind the games, told the fun way.</p>
+    <h1>Datos curiosos e historias de los juegos con los que creciste.</h1>
+    <p>Trivia de los 80s, 90s y 2000s — las historias detrás de los juegos, contadas de forma divertida.</p>
   </section>
 
   <section>
-    <h2>Latest stories</h2>
+    <h2>Últimas historias</h2>
     <div class="grid">
       {posts.map((post) => (
         <ArticleCard slug={post.id} title={post.data.title} description={post.data.description} decades={post.data.decades} />
