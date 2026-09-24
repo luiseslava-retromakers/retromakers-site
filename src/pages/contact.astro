@@ -2,10 +2,10 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Contact">
+<BaseLayout title="Contacto">
   <article class="prose-page">
-    <h1>Contact</h1>
-    <p>Got a fun fact, a correction, or a game you think deserves a page? Reach out.</p>
+    <h1>Contacto</h1>
+    <p>¿Tienes un dato curioso, una corrección, o un juego que crees que merece su propia página? Escríbenos.</p>
 
     <!--
       Netlify Forms: this works automatically once deployed on Netlify — no backend needed.
@@ -14,21 +14,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <form name="contact" method="POST" data-netlify="true">
       <input type="hidden" name="form-name" value="contact" />
       <label>
-        Name
+        Nombre
         <input type="text" name="name" required />
       </label>
       <label>
-        Email
+        Correo electrónico
         <input type="email" name="email" required />
       </label>
       <label>
-        Message
+        Mensaje
         <textarea name="message" rows="5" required></textarea>
       </label>
-      <button type="submit" class="button">Send</button>
+      <button type="submit" class="button">Enviar</button>
     </form>
 
-    <p>Or email <a href="mailto:leslava@retromakers.com">leslava@retromakers.com</a> directly.</p>
+    <p>O escríbenos directo a <a href="mailto:leslava@retromakers.com">leslava@retromakers.com</a>.</p>
   </article>
 </BaseLayout>
 
